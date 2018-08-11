@@ -81,8 +81,24 @@ namespace System.Diagnostics
         /// </devdoc>
         public override void Fail(string message, string detailMessage)
         {
-            // UIAssert is not enabled.
+            StackTrace stack = new StackTrace(true);
+            string stackTrace;
+            try
+            {
+                stackTrace = stack.ToString();
+            }
+            catch
+            {
+                stackTrace = "";
+            }
             WriteAssert(string.Empty, message, detailMessage);
+            if (AssertUiEnabled)
+            {
+                Debug.ShowAssertDialog(stackTrace, message, detailMessage, "Assertion Failed");
+            }
+            else if (Debugger.IsAttached)
+                Debugger.Break();
+
         }
 
          private void InitializeSettings() 
@@ -102,10 +118,6 @@ namespace System.Diagnostics
                                             detailMessage + Environment.NewLine
                                             + stackTrace;
             WriteLine(assertMessage);
-
-            // In case the debugger is attached we break the debugger.
-            if (Debugger.IsAttached)
-                Debugger.Break();
         }
 
         /// <devdoc>

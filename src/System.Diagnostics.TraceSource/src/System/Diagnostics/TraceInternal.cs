@@ -9,6 +9,19 @@ using System.Reflection;
 
 namespace System.Diagnostics
 {
+
+    //System.Diagnostics.Debug creates an instance of this via reflection if this assembly is present. This binds the public Debug API to use TraceInternal as its backing implementation.
+    //This type would not be visible in a public contract, it is effectively an implementation detail of the Debug class, but layered as a light up dependency in this assembly.
+    public class TraceDebugImpl : IDebugImpl
+    {
+        void Close() { TraceInternal.Close(); }
+        void Flush() { TraceInternal.Flush(); }
+        void Write(string message) { TraceInternal.Write(message); }
+        void WriteLine(string message) { TraceInternal.WriteLine(message); }
+        void Assert(bool condition, string message, string detailMessage) { TraceInternal.Assert(condition, message, detailMessage); }
+        //incomplete, there are bunch more overloads of Write/WriteLine/WriteLineIf etc
+    }
+
     internal static class TraceInternal
     {
         private static volatile string s_appName = null;
