@@ -39,7 +39,10 @@ namespace BasicEventSourceTests
                     eventSource.Name != "System.Runtime.InteropServices.InteropEventProvider" &&
                     eventSource.Name != "System.Reflection.Runtime.Tracing" &&
                     eventSource.Name != "Microsoft-Windows-DotNETRuntime" &&
-                    eventSource.Name != "System.Runtime"
+                    eventSource.Name != "System.Runtime" &&
+                    eventSource.Name != "Microsoft-System-Net-Sockets" &&
+                    eventSource.Name != "Microsoft-System-Net-NameResolution" &&
+                    eventSource.Name != "TestPlatform"
                     )
                 {
                     eventSourceNames += eventSource.Name + " ";

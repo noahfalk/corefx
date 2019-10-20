@@ -30,6 +30,15 @@ namespace BasicEventSourceTests
             }
         }
 
+        [Fact]
+        public void Test_Write_T_EventPipe()
+        {
+            using (var listener = new EventPipeListener())
+            {
+                Test_Write_T(listener);
+            }
+        }
+
         [ActiveIssue("dotnet/corefx #18806", TargetFrameworkMonikers.NetFramework)]
         [ActiveIssue("https://github.com/dotnet/corefx/issues/27106")]
         [ConditionalFact(nameof(IsProcessElevated))]

@@ -15,6 +15,7 @@
     <Compile Include="BasicEventSourceTest\TestsWriteEventToListener.Etw.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicEventSourceTest\Harness\EventPipeListener.cs" />
     <Compile Include="BasicEventSourceTest\Harness\EventTestHarness.cs" />
     <Compile Include="BasicEventSourceTest\FuzzyTests.cs" />
     <Compile Include="BasicEventSourceTest\Harness\Listeners.cs" />
@@ -40,8 +41,23 @@
     <Compile Include="CustomEventSources\SimpleEventSource.cs" />
     <Compile Include="CustomEventSources\UseAbstractEventSource.cs" />
     <Compile Include="CustomEventSources\UseInterfaceEventSource.cs" />
+    <Compile Include="RuntimeClient\DiagnosticsHelpers.cs" />
+    <Compile Include="RuntimeClient\DiagnosticsIpc\IpcClient.cs" />
+    <Compile Include="RuntimeClient\DiagnosticsIpc\IpcCommands.cs" />
+    <Compile Include="RuntimeClient\DiagnosticsIpc\IpcHeader.cs" />
+    <Compile Include="RuntimeClient\DiagnosticsIpc\IpcMessage.cs" />
+    <Compile Include="RuntimeClient\Eventing\DiagnosticsMessageType.cs" />
+    <Compile Include="RuntimeClient\Eventing\EventPipeClient.cs" />
+    <Compile Include="RuntimeClient\Eventing\EventPipeSessionType.cs" />
+    <Compile Include="RuntimeClient\Eventing\MessageHeader.cs" />
+    <Compile Include="RuntimeClient\Eventing\Provider.cs" />
+    <Compile Include="RuntimeClient\Eventing\SessionConfiguration.cs" />
+    <Compile Include="RuntimeClient\Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="$(TraceEventPackageVersion)" />
+    <Content Include="RuntimeClient\README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Diagnostics.Tracing.TraceEvent" Version="2.0.45" />
   </ItemGroup>
 </Project>

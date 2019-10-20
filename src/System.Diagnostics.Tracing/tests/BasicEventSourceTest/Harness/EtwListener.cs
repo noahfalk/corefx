@@ -13,6 +13,7 @@ using Microsoft.Diagnostics.Tracing;
 using System.Diagnostics.Tracing;
 #endif
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -95,7 +96,22 @@ namespace BasicEventSourceTests
             }
 
             _disposed = true;
-            _session.Flush();
+            try
+            {
+                _session.Flush();
+            }
+            catch (COMException)
+            {
+                // Bug in TraceEvent?
+                // System.Runtime.InteropServices.COMException
+                // The instance name passed was not recognized as valid by a WMI data provider. (0x80071069)
+            }
+            catch (InvalidOperationException)
+            {
+                // Bug in TraceEvent?
+                // System.InvalidOperationException
+                // Resolved assembly's simple name should be the same as of the requested assembly.
+            }
             Thread.Sleep(1010);      // Let it drain.
             _session.Dispose();     // This also will kill the real time thread
 
@@ -129,7 +145,7 @@ namespace BasicEventSourceTests
             // Ignore manifest events.
             if ((int)data.ID == 0xFFFE)
                 return;
-            this.OnEvent(new EtwEvent(data));
+            this.OnEvent?.Invoke(new EtwEvent(data));
         }
 
         private static readonly Guid EventTraceProviderID = new Guid("9e814aad-3204-11d2-9a82-006008a86939");
